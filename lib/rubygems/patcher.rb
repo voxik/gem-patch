@@ -37,15 +37,10 @@ class Gem::Patcher
     package = Gem::Package.new @patched_gem
     package.spec = @package.spec
 
-    # Change dir
-    @pwd = Dir.pwd
-    Dir.chdir @target_dir
-
-    # Build the patched gem
-    package.build true
-
-    # Go back to working dir
-    Dir.chdir @pwd
+    Dir.chdir @target_dir do
+      # Build the patched gem
+      package.build true
+    end
 
     # Move newly generated gem to working directory
     system("mv #{@target_dir}/#{@patched_gem} #{@patched_gem}")
