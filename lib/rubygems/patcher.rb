@@ -14,15 +14,15 @@ class Gem::Patcher
 
   # Patch the gem with given patches 
   def patch_with(patches)
-    @package = Gem::Package.new @gemfile
+    package = Gem::Package.new @gemfile
 
-    @tmpdir     = Dir.mktmpdir
-    @basename   = File.basename(@gemfile, '.gem')
-    @target_dir = File.join(@tmpdir, @basename)
+    tmpdir     = Dir.mktmpdir
+    basename   = File.basename @gemfile, '.gem'
+    target_dir = File.join @tmpdir, @basename
 
     info "Unpacking gem '#{@basename}'..."
 
-    @package.extract_files @target_dir #Dir.pwd
+    @package.extract_files target_dir #Dir.pwd
 
     # Apply all patches
     for p in patches
@@ -31,19 +31,19 @@ class Gem::Patcher
     end
 
     # Name of the patched gem
-    @patched_gem = @package.spec.file_name
+    patched_gem = package.spec.file_name
 
     # New gem file that will be generated
-    package = Gem::Package.new @patched_gem
-    package.spec = @package.spec
+    package = Gem::Package.new patched_gem
+    package.spec = package.spec
 
-    Dir.chdir @target_dir do
+    Dir.chdir target_dir do
       # Build the patched gem
       package.build true
     end
 
     # Move newly generated gem to working directory
-    system("mv #{@target_dir}/#{@patched_gem} #{@patched_gem}")
+    system("mv #{target_dir}/#{patched_gem} #{patched_gem}")
   end
 
   # Apply a patch
