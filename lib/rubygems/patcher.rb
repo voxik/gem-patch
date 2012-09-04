@@ -55,7 +55,6 @@ class Gem::Patcher
   def apply_patch(patch)
 
     # Keeping the file path absolute
-    #patch_path = File.expand_path(File.dirname(patch)) + File::SEPARATOR + File.basename(patch)
     patch_path = File.join(File.expand_path(File.dirname(patch)), File.basename(patch))
     info 'Path to the patch to apply: ' + patch_path
 
@@ -70,14 +69,6 @@ class Gem::Patcher
   private
 
   def info(msg)
-    say msg if Gem.configuration.verbose
-  end
-
-  def debug(msg)
-    say msg if Gem.configuration.really_verbose
-  end
-
-  def say(msg)
-    puts msg
+    puts msg if Gem.configuration.verbose
   end
 end
