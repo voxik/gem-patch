@@ -50,7 +50,7 @@ class Gem::Patcher
   def apply_patch(patch)
 
     # Keeping the file path absolute
-    patch_path = File.join(File.expand_path(File.dirname(patch)), File.basename(patch))
+    patch_path = File.expand_path(patch)
     info 'Path to the patch to apply: ' + patch_path
 
     # Applying the patch by calling patch -p0
