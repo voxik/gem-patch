@@ -43,7 +43,7 @@ class Gem::Patcher
     end
 
     # Move newly generated gem to working directory
-    system("mv #{target_dir}/#{patched_gem} #{patched_gem}")
+    system("mv #{File.join target_dir, patched_gem} #{patched_gem}")
   end
 
   # Apply a patch
